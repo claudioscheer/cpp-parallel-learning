@@ -2,7 +2,13 @@ CC=g++
 CFLAGS=-I.
 
 default:
-	@echo "Options:\nhello\n"
+	@echo "Options to run:\n\
+	- hello\n\
+	- string\n\
+	- math\n\
+	- input\n\
+	- array\n\
+	"
 
 hello:
 	$(CC) hello-world.cpp -o hello-world.o $(CFLAGS)
