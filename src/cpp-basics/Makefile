@@ -8,6 +8,7 @@ default:
 	- math\n\
 	- input\n\
 	- array\n\
+	- pointers\n\
 	"
 
 hello:
@@ -29,6 +30,10 @@ input:
 array:
 	$(CC) array.cpp -o array.o $(CFLAGS)
 	./array.o
+
+pointers:
+	$(CC) pointers.cpp -o pointers.o $(CFLAGS)
+	./pointers.o
 
 .PHONY : clean
 clean:
