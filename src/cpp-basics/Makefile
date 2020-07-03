@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-I.
+CFLAGS=
 
 default:
 	@echo "Options to run:\n\
@@ -11,8 +11,8 @@ default:
 	"
 
 hello:
-	$(CC) hello-world.cpp -o hello-world.o $(CFLAGS)
-	./hello-world.o
+	$(CC) hello_world.cpp -o hello_world.o $(CFLAGS)
+	./hello_world.o
 
 string:
 	$(CC) string.cpp -o string.o $(CFLAGS)
