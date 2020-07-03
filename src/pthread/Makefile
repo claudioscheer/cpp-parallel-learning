@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=
+CFLAGS=-lpthread
 
 default:
 	@echo "Options to run:\n\
