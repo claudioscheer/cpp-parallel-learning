@@ -3,12 +3,12 @@ CFLAGS=-ltbb
 
 default:
 	@echo "Options to run:\n\
-	- parallel_for\n\
+	- parallel_reduce\n\
 	"
 
-parallel_for:
-	$(CC) parallel_for.cpp -o parallel_for.o $(CFLAGS)
-	./parallel_for.o
+parallel_reduce:
+	$(CC) parallel_reduce.cpp -o parallel_reduce.o $(CFLAGS)
+	./parallel_reduce.o
 
 .PHONY : clean
 clean:
