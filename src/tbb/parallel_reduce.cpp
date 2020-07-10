@@ -31,8 +31,8 @@ int main()
     start = std::chrono::steady_clock::now();
     int parallel_result = tbb::parallel_reduce(
         tbb::blocked_range<int>(0, values.size()),
-        0.0, // For sum, the initial value is zero. For multiplication, the initial value is one.
-        [&](tbb::blocked_range<int> range, int running_total) {
+        0, // For sum, the initial value is zero. For multiplication, the initial value is one.
+        [&](tbb::blocked_range<int> range, int running_total) -> int {
             for (int i = range.begin(); i != range.end(); i++)
             {
                 running_total += values[i];
