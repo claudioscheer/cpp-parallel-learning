@@ -9,6 +9,7 @@ default:
 	- input\n\
 	- array\n\
 	- pointers\n\
+	- class\n\
 	"
 
 hello:
@@ -34,6 +35,10 @@ array:
 pointers:
 	$(CC) pointers.cpp -o pointers.o $(CFLAGS)
 	./pointers.o
+
+class:
+	$(CC) class.cpp -o class.o $(CFLAGS)
+	./class.o
 
 .PHONY : clean
 clean:
