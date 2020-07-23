@@ -4,6 +4,7 @@
 #include <chrono>
 #include <tbb/parallel_for.h>
 #include <tbb/parallel_reduce.h>
+#include <tbb/global_control.h>
 
 int generate_value()
 {
@@ -12,6 +13,14 @@ int generate_value()
 
 int main()
 {
+    /*
+        Limit total number of worker threads that can be active in the task scheduler.
+        With max_allowed_parallelism set to 1, global_control enforces serial execution of all tasks by the application thread(s), i.e. the task scheduler does not allow worker threads to run.
+
+        https://software.intel.com/en-us/node/589744
+    */
+    tbb::global_control tc(tbb::global_control::max_allowed_parallelism, 12);
+
     std::vector<int> values(10000000);
     std::generate(values.begin(), values.end(), generate_value);
 
