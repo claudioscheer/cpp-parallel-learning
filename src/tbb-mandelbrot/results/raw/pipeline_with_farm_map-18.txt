@@ -1,0 +1,11 @@
+#pipeline(seq, farm(map(seq)), seq) pattern implementation!
+Mandelbrot set from (-2.125+I -1.5) to (0.875+I 1.5)
+Resolution 4194304 pixels, Max. n. of iterations 10240
+Run [0] DONE, time= 2630.729000 (ms)
+Run [1] DONE, time= 2627.719000 (ms)
+Run [2] DONE, time= 2627.576000 (ms)
+Run [3] DONE, time= 2627.698000 (ms)
+Run [4] DONE, time= 2627.600000 (ms)
+Average on 5 experiments = 2628.264400 (ms) Std. Dev. 1.233519
+
+Press any key...

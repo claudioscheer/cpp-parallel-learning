@@ -1,0 +1,11 @@
+#map(seq) pattern implementation!
+Mandelbrot set from (-2.125+I -1.5) to (0.875+I 1.5)
+Resolution 4194304 pixels, Max. n. of iterations 10240
+Run [0] DONE, time= 5382.901000 (ms)
+Run [1] DONE, time= 5382.120000 (ms)
+Run [2] DONE, time= 5377.876000 (ms)
+Run [3] DONE, time= 5384.891000 (ms)
+Run [4] DONE, time= 5376.125000 (ms)
+Average on 5 experiments = 5380.782600 (ms) Std. Dev. 3.264867
+
+Press any key...

@@ -1,0 +1,12 @@
+*.o
+map
+farm
+pipeline
+pipeline_with_farm
+pipeline_with_farm_map
+pipeline_with_map
+seq
+*.~*
+libmarX2.a
+.vscode
+!.vscode/tasks.json
