@@ -3,9 +3,9 @@ CFLAGS=-ltbb
 
 default:
 	@echo "Options to run:\n\
-	- parallel_reduce\n\
-	- parallel_map\n\
-	"
+		- parallel_reduce\n\
+		- parallel_map\n\
+		"
 
 parallel_reduce:
 	$(CC) parallel_reduce.cpp -o parallel_reduce.o $(CFLAGS)

@@ -1,8 +1,7 @@
-#include <iostream>
 #include <assert.h>
+#include <iostream>
 
-int main()
-{
+int main() {
     // Store a value.
     int value = 1;
     std::cout << value << std::endl;

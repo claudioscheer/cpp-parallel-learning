@@ -1,31 +1,31 @@
 ifdef MANDEL_NO_DISPLAY
-DIS=-DNO_DISPLAY
+	DIS=-DNO_DISPLAY
 else
-DIS=
+	DIS=
 endif
 
-CC                   = gcc 
-CXX                  = g++ 
-LINK_OPT             = 
-VERSION              = 
+CC                   = gcc
+CXX                  = g++
+LINK_OPT             =
+VERSION              =
 OPTIMIZE_FLAGS       = -O3 -finline-functions
 CXXFLAGS             = -std=c++1y -DNODBG -DNO_CMAKE_CONFIG -Wall
-CFLAGS               = $(DIS) 
+CFLAGS               = $(DIS)
 LDFLAGS              = $(DIS) -L/usr/X11R6/lib -L.
 INCS                 = -I build/libraries/
 LIBS                 = -lmarX2 -lX11 -lm
 INCLUDES             = -I. $(INCS) -I/usr/X11R6/include
 TARGET               = seq farm map pipeline_with_map
-SOURCES		     =  mandel.cpp mandel_farm.cpp mandel_map.cpp mandel_pipeline_with_map.cpp
+SOURCES			 =  mandel.cpp mandel_farm.cpp mandel_map.cpp mandel_pipeline_with_map.cpp
 SRC = .
 INC = .
 
-.PHONY: all clean cleanall 
+.PHONY: all clean cleanall
 
 all:$(TARGET)
 
 libmarX2.a: $(SRC)/marX2.c $(INC)/marX2.h
-	gcc -c $(OPTIMIZE_FLAGS) $(CFLAGS) -I/usr/X11R6/include $(INCLUDES) $(SRC)/marX2.c 
+	gcc -c $(OPTIMIZE_FLAGS) $(CFLAGS) -I/usr/X11R6/include $(INCLUDES) $(SRC)/marX2.c
 	ar -rv libmarX2.a marX2.o
 	ranlib libmarX2.a
 

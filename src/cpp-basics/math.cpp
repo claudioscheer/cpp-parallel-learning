@@ -1,8 +1,7 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 
-int main()
-{
+int main() {
     std::cout << pow(2, 2) << std::endl;
     std::cout << sqrt(36) << std::endl;
     std::cout << round(4.5) << std::endl;

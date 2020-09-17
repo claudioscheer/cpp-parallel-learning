@@ -1,7 +1,6 @@
 #include <iostream>
 
-int main()
-{
+int main() {
     std::cout << "Enter your name: ";
     std::string name;
     getline(std::cin, name);

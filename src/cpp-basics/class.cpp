@@ -1,13 +1,9 @@
-#include <iostream>
 #include "class.h"
+#include <iostream>
 
-double Operations::operate()
-{
-    return this->a * this->b;
-}
+double Operations::operate() { return this->a * this->b; }
 
-int main()
-{
+int main() {
     Operations *operations = new Operations();
     operations->set_values(2.5, 1.0);
 

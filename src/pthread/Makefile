@@ -3,8 +3,8 @@ CFLAGS=-lpthread
 
 default:
 	@echo "Options to run:\n\
-	- create_threads\n\
-	"
+		- create_threads\n\
+		"
 
 create_threads:
 	$(CC) create_threads.cpp -o create_threads.o $(CFLAGS)

@@ -1,7 +1,6 @@
 #include <iostream>
 
-int main()
-{
+int main() {
     std::string text = "Dhis is a simple test.";
     text[0] = 'T';
     std::cout << text[0] << std::endl;

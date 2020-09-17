@@ -1,28 +1,25 @@
+#include "marX2.h"
+#include <iostream>
+#include <math.h>
 #include <stdio.h>
 #include <sys/time.h>
-#include <math.h>
-#include <iostream>
-#include <tbb/parallel_for.h>
 #include <tbb/global_control.h>
-#include "marX2.h"
+#include <tbb/parallel_for.h>
 
 #define DIM 800
 #define ITERATION 1024
 
-double diffmsec(struct timeval a, struct timeval b)
-{
+double diffmsec(struct timeval a, struct timeval b) {
     long sec = (a.tv_sec - b.tv_sec);
     long usec = (a.tv_usec - b.tv_usec);
-    if (usec < 0)
-    {
+    if (usec < 0) {
         --sec;
         usec += 1000000;
     }
     return ((double)(sec * 1000) + (double)usec / 1000.0);
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
 #if !defined(NO_DISPLAY)
     XInitThreads();
 #endif
@@ -35,12 +32,10 @@ int main(int argc, char **argv)
     double averageTime = 0;
     int max_threads = 12;
 
-    if (argc < 5)
-    {
-        printf("Usage: ./map [size of the image] [number of iterations] [number of retries] [number of threads]\n\n");
-    }
-    else
-    {
+    if (argc < 5) {
+        printf("Usage: ./map [size of the image] [number of iterations] "
+               "[number of retries] [number of threads]\n\n");
+    } else {
         dim = atoi(argv[1]);
         niter = atoi(argv[2]);
         retries = atoi(argv[3]);
@@ -50,45 +45,45 @@ int main(int argc, char **argv)
     unsigned char *M = (unsigned char *)malloc(dim);
     double step = range / ((double)dim);
 
-    printf("Mandelbrot set from (%g+I %g) to (%g+I %g)\n",
-           init_a, init_b, init_a + range, init_b + range);
-    printf("Resolution %d pixels, Max. n. of iterations %d\n", dim * dim, niter);
+    printf("Mandelbrot set from (%g+I %g) to (%g+I %g)\n", init_a, init_b,
+           init_a + range, init_b + range);
+    printf("Resolution %d pixels, Max. n. of iterations %d\n", dim * dim,
+           niter);
 
 #if !defined(NO_DISPLAY)
     SetupXWindows(dim, dim, 1, NULL, "Mandelbrot map(seq)");
 #endif
 
     /*
-        Limit total number of worker threads that can be active in the task scheduler.
-        With max_allowed_parallelism set to 1, global_control enforces serial execution of all tasks by the application thread(s), i.e. the task scheduler does not allow worker threads to run.
+        Limit total number of worker threads that can be active in the task
+       scheduler. With max_allowed_parallelism set to 1, global_control enforces
+       serial execution of all tasks by the application thread(s), i.e. the task
+       scheduler does not allow worker threads to run.
 
         https://software.intel.com/en-us/node/589744
     */
-    tbb::global_control c(tbb::global_control::max_allowed_parallelism, max_threads);
+    tbb::global_control c(tbb::global_control::max_allowed_parallelism,
+                          max_threads);
 
-    for (int r = 0; r < retries; r++)
-    {
+    for (int r = 0; r < retries; r++) {
         // Start time.
         gettimeofday(&t1, NULL);
         // Map each line in parallel.
-        for (int i = 0; i < dim; i++)
-        {
+        for (int i = 0; i < dim; i++) {
             double im = init_b + (step * i);
             tbb::parallel_for(
                 tbb::blocked_range<int>(0, dim),
-                [M, &im, &niter, &init_a, &step](tbb::blocked_range<int> range) {
-                    for (int j = range.begin(); j != range.end(); j++)
-                    {
+                [M, &im, &niter, &init_a,
+                 &step](tbb::blocked_range<int> range) {
+                    for (int j = range.begin(); j != range.end(); j++) {
                         double a, cr;
                         a = cr = init_a + step * j;
                         double b = im;
                         int k = 0;
-                        for (k = 0; k < niter; k++)
-                        {
+                        for (k = 0; k < niter; k++) {
                             double a2 = a * a;
                             double b2 = b * b;
-                            if ((a2 + b2) > 4.0)
-                            {
+                            if ((a2 + b2) > 4.0) {
                                 break;
                             }
                             b = 2 * a * b + im;
@@ -108,12 +103,13 @@ int main(int argc, char **argv)
     }
     averageTime = averageTime / (double)retries;
     double variance = 0;
-    for (int r = 0; r < retries; r++)
-    {
+    for (int r = 0; r < retries; r++) {
         variance += (runs[r] - averageTime) * (runs[r] - averageTime);
     }
     variance /= retries;
-    printf("Average on %d experiments = %f (ms) Std. Dev. %f\n\nPress any key...\n", retries, averageTime, sqrt(variance));
+    printf("Average on %d experiments = %f (ms) Std. Dev. %f\n\nPress any "
+           "key...\n",
+           retries, averageTime, sqrt(variance));
 
 #if !defined(NO_DISPLAY)
     getchar();
