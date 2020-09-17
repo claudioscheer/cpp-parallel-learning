@@ -23,9 +23,11 @@ int main(int argc, char** argv)
     {
         MPI_Status status; // Return status.
         int data[7];
-        for (int source = 1; source < num_processes; source++) {
+        for (int source = 1; source < num_processes; source++)
+        {
             MPI_Recv(data, 7, MPI_INT, source, tag, MPI_COMM_WORLD, &status);
-            for (int i = 0; i < 7; i++) {
+            for (int i = 0; i < 7; i++)
+            {
                 printf("%d", data[i]);
             }
             printf("\n");

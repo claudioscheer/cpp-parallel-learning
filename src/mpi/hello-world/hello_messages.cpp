@@ -25,7 +25,8 @@ int main(int argc, char** argv)
     }
     else
     {
-        for (int source = 1; source < num_processes; source++) {
+        for (int source = 1; source < num_processes; source++)
+        {
             MPI_Recv(message_buffer, 100, MPI_CHAR, source, tag, MPI_COMM_WORLD, &status);
             printf("%s\n", message_buffer);
         }
