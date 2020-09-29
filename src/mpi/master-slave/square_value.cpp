@@ -29,6 +29,8 @@ int main(int argc, char **argv) {
         double start_time = MPI_Wtime();
         for (int i = 1; i < num_processes; i++) {
             MPI_Send(&i, 1, MPI_INT, i, tag, MPI_COMM_WORLD);
+        }
+        for (int i = 1; i < num_processes; i++) {
             int result;
             MPI_Recv(&result, 1, MPI_INT, i, tag, MPI_COMM_WORLD, &status);
             printf("%d - %d\n", i, result);

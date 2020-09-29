@@ -28,28 +28,23 @@ void generator(int size, int recipient, int tag_data, int tag_time) {
     }
 }
 
-void process_1(int size, int source, int recipient, int tag_data) {
+void process(int my_rank, int size, int source, int recipient, int tag_data) {
     MPI_Status status; // Return status.
     int data[2];
     for (int i = 1; i <= size; i++) {
         MPI_Recv(&data, 2, MPI_INT, MPI_ANY_SOURCE, tag_data, MPI_COMM_WORLD,
                  &status);
 
-        int data_temp = data[1] * data[1];
-        data[1] = data_temp;
+        int data_temp;
+        switch (my_rank) {
+        case 1:
+            data_temp = data[1] + data[1];
+            break;
 
-        MPI_Send(&data, 2, MPI_INT, recipient, tag_data, MPI_COMM_WORLD);
-    }
-}
-
-void process_2(int size, int source, int recipient, int tag_data) {
-    MPI_Status status; // Return status.
-    int data[2];
-    for (int i = 1; i <= size; i++) {
-        MPI_Recv(&data, 2, MPI_INT, MPI_ANY_SOURCE, tag_data, MPI_COMM_WORLD,
-                 &status);
-
-        int data_temp = data[1] + 1;
+        case 2:
+            data_temp = data[1] * data[1];
+            break;
+        }
         data[1] = data_temp;
 
         MPI_Send(&data, 2, MPI_INT, recipient, tag_data, MPI_COMM_WORLD);
@@ -81,23 +76,15 @@ int main(int argc, char **argv) {
     int size = 7;
     int source = my_rank - 1;
     int recipient = my_rank + 1;
-    switch (my_rank) {
-    case 0:
+
+    if (my_rank == 0) {
         generator(size, recipient, tag_data, tag_time);
-        break;
-
-    case 1:
-        process_1(size, source, recipient, tag_data);
-        break;
-
-    case 2:
-        process_2(size, source, recipient, tag_data);
-        break;
-
-    case 3:
+    } else if (my_rank == num_processes - 1) {
         printer(size, 0, source, tag_data, tag_time);
-        break;
+    } else {
+        process(my_rank, size, source, recipient, tag_data);
     }
+
     MPI_Finalize();
     return 0;
 }
